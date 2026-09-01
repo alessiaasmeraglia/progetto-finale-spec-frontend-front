@@ -20,7 +20,7 @@ function ShoeDetailsPage() {
                 return res.json();
             })
             .then((data) => {
-                setShoe(data);
+                setShoe(data.shoe);
             })
             .catch((err) => {
                 setError(err.message);

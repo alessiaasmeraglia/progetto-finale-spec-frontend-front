@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { FavoritesProvider } from "./contexts/FavoritesContext.jsx";
+import { CompareProvider } from "./contexts/CompareContext.jsx";
 import "./index.css";
 import App from "./App.jsx";
 
@@ -9,7 +10,9 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <FavoritesProvider>
-        <App />
+        <CompareProvider>
+          <App />
+        </CompareProvider>
       </FavoritesProvider>
     </BrowserRouter>
   </StrictMode>

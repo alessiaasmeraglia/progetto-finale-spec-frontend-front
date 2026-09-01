@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { sortShoes } from "../utils/shoes";
 import { useFavorites } from "../contexts/FavoritesContext";
+import { useCompare } from "../contexts/CompareContext";
 
 function ShoesPage() {
     const [shoes, setShoes] = useState([]);
@@ -10,6 +11,7 @@ function ShoesPage() {
     const [sort, setSort] = useState("title-asc");
 
     const { toggleFavorite, isFavorite } = useFavorites();
+    const { toggleCompare, isInCompare, compareItems } = useCompare();
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -83,6 +85,15 @@ function ShoesPage() {
                         {isFavorite(shoe.id)
                             ? "Rimuovi dai preferiti"
                             : "Aggiungi ai preferiti"}
+                    </button>
+
+                    <button
+                        onClick={() => toggleCompare(shoe)}
+                        disabled={!isInCompare(shoe.id) && compareItems.length >= 2}
+                    >
+                        {isInCompare(shoe.id)
+                            ? "Rimuovi dal confronto"
+                            : "Confronta"}
                     </button>
                 </div>
             ))}

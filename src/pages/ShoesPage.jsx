@@ -9,6 +9,7 @@ function ShoesPage() {
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("");
     const [sort, setSort] = useState("title-asc");
+    const [debouncedSearch, setDebouncedSearch] = useState("");
 
     const { toggleFavorite, isFavorite } = useFavorites();
     const { toggleCompare, isInCompare, compareItems } = useCompare();
@@ -21,7 +22,17 @@ function ShoesPage() {
     const sortedShoes = sortShoes(shoes, sort);
 
     useEffect(() => {
-        fetch(`${API_URL}/shoes?search=${search}&category=${category}`)
+        const timer = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [search]);
+
+    useEffect(() => {
+        setLoading(true);
+
+        fetch(`${API_URL}/shoes?search=${debouncedSearch}&category=${category}`)
             .then((res) => {
                 if (!res.ok) {
                     throw new Error("Errore nel recupero delle scarpette");
@@ -38,7 +49,7 @@ function ShoesPage() {
             .finally(() => {
                 setLoading(false);
             });
-    }, [search, category, API_URL]);
+    }, [debouncedSearch, category, API_URL]);
 
     return (
         <section>

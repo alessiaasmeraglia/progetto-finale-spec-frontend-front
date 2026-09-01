@@ -1,8 +1,22 @@
+import { Routes, Route } from "react-router-dom";
+
+import HomePage from "./pages/HomePage";
+import ShoesPage from "./pages/ShoesPage";
+import ShoeDetailsPage from "./pages/ShoeDetailsPage";
+import ComparePage from "./pages/ComparePage";
+import FavoritesPage from "./pages/FavoritesPage";
+import NotFoundPage from "./pages/NotFoundPage";
+
 function App() {
   return (
-    <div>
-      <h1>Climbing Shoes Comparator</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/shoes" element={<ShoesPage />} />
+      <Route path="/shoes/:id" element={<ShoeDetailsPage />} />
+      <Route path="/compare" element={<ComparePage />} />
+      <Route path="/favorites" element={<FavoritesPage />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
   );
 }
 

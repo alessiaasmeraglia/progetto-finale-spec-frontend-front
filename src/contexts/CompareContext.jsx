@@ -1,9 +1,20 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const CompareContext = createContext();
 
 export function CompareProvider({ children }) {
-    const [compareItems, setCompareItems] = useState([]);
+    const [compareItems, setCompareItems] = useState(() => {
+        const savedCompareItems = localStorage.getItem("compareItems");
+
+        return savedCompareItems ? JSON.parse(savedCompareItems) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem(
+            "compareItems",
+            JSON.stringify(compareItems)
+        );
+    }, [compareItems]);
 
     function toggleCompare(shoe) {
         const isAlreadySelected = compareItems.some(

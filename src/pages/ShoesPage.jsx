@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function ShoesPage() {
     const [shoes, setShoes] = useState([]);
@@ -35,6 +36,10 @@ function ShoesPage() {
                 <div key={shoe.id}>
                     <h2>{shoe.title}</h2>
                     <p>{shoe.category}</p>
+                    
+                    <Link to={`/shoes/${shoe.id}`}>
+                        Dettagli
+                    </Link>
                 </div>
             ))}
         </section>

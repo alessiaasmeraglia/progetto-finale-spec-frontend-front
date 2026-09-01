@@ -1,5 +1,62 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 function ShoeDetailsPage() {
-    return <h1>Dettaglio Scarpette</h1>;
+    const { id } = useParams();
+
+    const [shoe, setShoe] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    useEffect(() => {
+        fetch(`${API_URL}/shoes/${id}`)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error("Scarpetta non trovata");
+                }
+
+                return res.json();
+            })
+            .then((data) => {
+                setShoe(data);
+            })
+            .catch((err) => {
+                setError(err.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }, [id, API_URL]);
+
+    if (loading) {
+        return <p>Caricamento...</p>;
+    }
+
+    if (error) {
+        return <p>{error}</p>;
+    }
+
+    if (!shoe) {
+        return null;
+    }
+
+    return (
+        <section>
+            <h1>{shoe.title}</h1>
+
+            <p>Categoria: {shoe.category}</p>
+            <p>Brand: {shoe.brand}</p>
+            <p>Prezzo: €{shoe.price}</p>
+            <p>Chiusura: {shoe.closure}</p>
+            <p>Rigidità: {shoe.stiffness}</p>
+            <p>Profilo: {shoe.downturn}</p>
+            <p>Livello: {shoe.level}</p>
+            <p>Ideale per: {shoe.bestFor}</p>
+            <p>{shoe.description}</p>
+        </section>
+    );
 }
 
 export default ShoeDetailsPage;

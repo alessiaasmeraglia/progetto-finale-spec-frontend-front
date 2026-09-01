@@ -5,11 +5,12 @@ function ShoesPage() {
     const [shoes, setShoes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [search, setSearch] = useState("");
 
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        fetch(`${API_URL}/shoes`)
+        fetch(`${API_URL}/shoes?search=${search}`)
             .then((res) => {
                 if (!res.ok) {
                     throw new Error("Errore nel recupero delle scarpette");
@@ -26,17 +27,24 @@ function ShoesPage() {
             .finally(() => {
                 setLoading(false);
             });
-    }, []);
+    }, [search, API_URL]);
 
     return (
         <section>
             <h1>Scarpette</h1>
 
+            <input
+                type="text"
+                placeholder="Cerca una scarpetta..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
+
             {shoes.map((shoe) => (
                 <div key={shoe.id}>
                     <h2>{shoe.title}</h2>
                     <p>{shoe.category}</p>
-                    
+
                     <Link to={`/shoes/${shoe.id}`}>
                         Dettagli
                     </Link>

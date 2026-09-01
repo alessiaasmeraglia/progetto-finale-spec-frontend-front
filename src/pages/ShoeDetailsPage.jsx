@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useFavorites } from "../contexts/FavoritesContext";
+import { useCompare } from "../contexts/CompareContext";
 
 function ShoeDetailsPage() {
     const { id } = useParams();
@@ -7,6 +9,9 @@ function ShoeDetailsPage() {
     const [shoe, setShoe] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
+    const { toggleFavorite, isFavorite } = useFavorites();
+    const { toggleCompare, isInCompare, compareItems } = useCompare();
 
     const API_URL = import.meta.env.VITE_API_URL;
 
@@ -55,6 +60,21 @@ function ShoeDetailsPage() {
             <p>Livello: {shoe.level}</p>
             <p>Ideale per: {shoe.bestFor}</p>
             <p>{shoe.description}</p>
+            
+            <button onClick={() => toggleFavorite(shoe)}>
+                {isFavorite(shoe.id)
+                    ? "Rimuovi dai preferiti"
+                    : "Aggiungi ai preferiti"}
+            </button>
+
+            <button
+                onClick={() => toggleCompare(shoe)}
+                disabled={!isInCompare(shoe.id) && compareItems.length >= 2}
+            >
+                {isInCompare(shoe.id)
+                    ? "Rimuovi dal confronto"
+                    : "Confronta"}
+            </button>
         </section>
     );
 }

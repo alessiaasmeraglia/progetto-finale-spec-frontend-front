@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { sortShoes } from "../utils/shoes";
+import { useFavorites } from "../contexts/FavoritesContext";
 
 function ShoesPage() {
     const [shoes, setShoes] = useState([]);
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("");
     const [sort, setSort] = useState("title-asc");
+
+    const { toggleFavorite, isFavorite } = useFavorites();
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -75,6 +78,12 @@ function ShoesPage() {
                     <Link to={`/shoes/${shoe.id}`}>
                         Dettagli
                     </Link>
+
+                    <button onClick={() => toggleFavorite(shoe)}>
+                        {isFavorite(shoe.id)
+                            ? "Rimuovi dai preferiti"
+                            : "Aggiungi ai preferiti"}
+                    </button>
                 </div>
             ))}
         </section>

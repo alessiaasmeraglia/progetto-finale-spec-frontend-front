@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
-import { useFavorites } from "../contexts/FavoritesContext";
-import { useCompare } from "../contexts/CompareContext";
 import { sortShoes } from "../utils/shoes";
+
+import ShoeCard from "../components/ShoeCard";
 
 function ShoesPage() {
     const [shoes, setShoes] = useState([]);
@@ -14,14 +12,6 @@ function ShoesPage() {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
-    const { toggleFavorite, isFavorite } = useFavorites();
-
-    const {
-        toggleCompare,
-        isInCompare,
-        compareItems,
-    } = useCompare();
 
     const API_URL = import.meta.env.VITE_API_URL;
 
@@ -107,33 +97,10 @@ function ShoesPage() {
             {!loading &&
                 !error &&
                 sortedShoes.map((shoe) => (
-                    <div key={shoe.id}>
-                        <h2>{shoe.title}</h2>
-
-                        <p>{shoe.category}</p>
-
-                        <Link to={`/shoes/${shoe.id}`}>
-                            Dettagli
-                        </Link>
-
-                        <button onClick={() => toggleFavorite(shoe)}>
-                            {isFavorite(shoe.id)
-                                ? "Rimuovi dai preferiti"
-                                : "Aggiungi ai preferiti"}
-                        </button>
-
-                        <button
-                            onClick={() => toggleCompare(shoe)}
-                            disabled={
-                                !isInCompare(shoe.id) &&
-                                compareItems.length >= 2
-                            }
-                        >
-                            {isInCompare(shoe.id)
-                                ? "Rimuovi dal confronto"
-                                : "Confronta"}
-                        </button>
-                    </div>
+                    <ShoeCard
+                        key={shoe.id}
+                        shoe={shoe}
+                    />
                 ))}
         </section>
     );

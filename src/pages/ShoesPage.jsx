@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { sortShoes } from "../utils/shoes";
 
 function ShoesPage() {
     const [shoes, setShoes] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("");
+    const [sort, setSort] = useState("title-asc");
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     const API_URL = import.meta.env.VITE_API_URL;
+
+    const sortedShoes = sortShoes(shoes, sort);
 
     useEffect(() => {
         fetch(`${API_URL}/shoes?search=${search}&category=${category}`)
@@ -52,7 +57,17 @@ function ShoesPage() {
                 <option value="All-round">All-round</option>
             </select>
 
-            {shoes.map((shoe) => (
+            <select
+                value={sort}
+                onChange={(e) => setSort(e.target.value)}
+            >
+                <option value="title-asc">Titolo A-Z</option>
+                <option value="title-desc">Titolo Z-A</option>
+                <option value="category-asc">Categoria A-Z</option>
+                <option value="category-desc">Categoria Z-A</option>
+            </select>
+
+            {sortedShoes.map((shoe) => (
                 <div key={shoe.id}>
                     <h2>{shoe.title}</h2>
                     <p>{shoe.category}</p>

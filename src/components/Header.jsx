@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { useFavorites } from "../contexts/FavoritesContext";
+import { useCompare } from "../contexts/CompareContext";
 
 function Header() {
     const { favorites } = useFavorites();
+    const { compareItems } = useCompare();
 
     return (
         <header>
@@ -16,7 +18,7 @@ function Header() {
                 </NavLink>
 
                 <NavLink to="/compare">
-                    Confronta
+                    Confronta ({compareItems.length})
                 </NavLink>
 
                 <NavLink to="/favorites">

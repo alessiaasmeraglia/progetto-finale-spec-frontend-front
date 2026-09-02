@@ -11,34 +11,66 @@ function ShoeCard({ shoe }) {
         compareItems,
     } = useCompare();
 
+    const favorite = isFavorite(shoe.id);
+    const compared = isInCompare(shoe.id);
+    const compareFull = compareItems.length >= 2 && !compared;
+
+
     return (
-        <div>
-            <h2>{shoe.title}</h2>
+        <article className="card h-100 shadow-sm">
+            <div className="card-body d-flex flex-column">
+                <span className="badge text-bg-light border align-self-start mb-2">
+                    {shoe.category}
+                </span>
 
-            <p>{shoe.category}</p>
+                <h2 className="h5 card-title">
+                    {shoe.title}
+                </h2>
 
-            <Link to={`/shoes/${shoe.id}`}>
-                Dettagli
-            </Link>
+                <div className="mt-auto pt-3 d-grid gap-2">
+                    <Link
+                        to={`/shoes/${shoe.id}`}
+                        className="btn btn-primary"
+                    >
+                        Vedi dettagli
+                    </Link>
 
-            <button onClick={() => toggleFavorite(shoe)}>
-                {isFavorite(shoe.id)
-                    ? "Rimuovi dai preferiti"
-                    : "Aggiungi ai preferiti"}
-            </button>
+                    <button
+                        type="button"
+                        className={`btn ${favorite
+                            ? "btn-danger"
+                            : "btn-outline-danger"
+                            }`}
+                        onClick={() => toggleFavorite(shoe)}
+                    >
+                        <i
+                            className={`bi ${favorite ? "bi-heart-fill" : "bi-heart"
+                                } me-2`}
+                        ></i>
 
-            <button
-                onClick={() => toggleCompare(shoe)}
-                disabled={
-                    !isInCompare(shoe.id) &&
-                    compareItems.length >= 2
-                }
-            >
-                {isInCompare(shoe.id)
-                    ? "Rimuovi dal confronto"
-                    : "Confronta"}
-            </button>
-        </div>
+                        {favorite
+                            ? "Rimuovi dai preferiti"
+                            : "Aggiungi ai preferiti"}
+                    </button>
+
+                    <button
+                        type="button"
+                        className={`btn ${compared
+                            ? "btn-dark"
+                            : "btn-outline-dark"
+                            }`}
+                        onClick={() => toggleCompare(shoe)}
+                        disabled={compareFull}
+                    >
+                        <i className="bi bi-arrow-left-right me-2"></i>
+
+                        {compared
+                            ? "Rimuovi dal confronto"
+                            : "Confronta"}
+                    </button>
+                </div>
+            </div>
+        </article>
     );
 }
 

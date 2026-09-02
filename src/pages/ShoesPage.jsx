@@ -94,14 +94,18 @@ function ShoesPage() {
                 <p>Nessuna scarpetta trovata.</p>
             )}
 
-            {!loading &&
-                !error &&
-                sortedShoes.map((shoe) => (
-                    <ShoeCard
-                        key={shoe.id}
-                        shoe={shoe}
-                    />
-                ))}
+            {!loading && !error && sortedShoes.length > 0 && (
+                <div className="row g-4">
+                    {sortedShoes.map((shoe) => (
+                        <div
+                            className="col-12 col-md-6 col-lg-4"
+                            key={shoe.id}
+                        >
+                            <ShoeCard shoe={shoe} />
+                        </div>
+                    ))}
+                </div>
+            )}
         </section>
     );
 }

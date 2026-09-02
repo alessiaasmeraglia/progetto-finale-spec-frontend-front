@@ -88,81 +88,159 @@ function ComparePage() {
     }
 
     return (
-        <section>
-            <h1>Confronta scarpette</h1>
+        <section className="container py-5">
+            <div className="mb-4">
+                <h1 className="display-6 fw-bold">
+                    Confronta scarpette
+                </h1>
 
-            {details.length === 2 && (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Caratteristica</th>
-                            <th>{details[0].title}</th>
-                            <th>{details[1].title}</th>
-                        </tr>
-                    </thead>
+                <p className="text-body-secondary mb-0">
+                    Metti a confronto caratteristiche, utilizzo e prezzo.
+                </p>
+            </div>
 
-                    <tbody>
-                        <tr>
-                            <th>Categoria</th>
-                            <td>{details[0].category}</td>
-                            <td>{details[1].category}</td>
-                        </tr>
+            {compareItems.length === 0 && (
+                <div className="text-center py-5">
+                    <i className="bi bi-arrow-left-right fs-1 text-body-secondary"></i>
 
-                        <tr>
-                            <th>Brand</th>
-                            <td>{details[0].brand}</td>
-                            <td>{details[1].brand}</td>
-                        </tr>
+                    <h2 className="h4 mt-3">
+                        Nessuna scarpetta selezionata
+                    </h2>
 
-                        <tr>
-                            <th>Prezzo</th>
-                            <td>€{details[0].price}</td>
-                            <td>€{details[1].price}</td>
-                        </tr>
+                    <p className="text-body-secondary">
+                        Aggiungi due scarpette per iniziare il confronto.
+                    </p>
 
-                        <tr>
-                            <th>Chiusura</th>
-                            <td>{details[0].closure}</td>
-                            <td>{details[1].closure}</td>
-                        </tr>
-
-                        <tr>
-                            <th>Rigidità</th>
-                            <td>{details[0].stiffness}</td>
-                            <td>{details[1].stiffness}</td>
-                        </tr>
-
-                        <tr>
-                            <th>Profilo</th>
-                            <td>{details[0].downturn}</td>
-                            <td>{details[1].downturn}</td>
-                        </tr>
-
-                        <tr>
-                            <th>Livello</th>
-                            <td>{details[0].level}</td>
-                            <td>{details[1].level}</td>
-                        </tr>
-
-                        <tr>
-                            <th>Ideale per</th>
-                            <td>{details[0].bestFor}</td>
-                            <td>{details[1].bestFor}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <Link to="/shoes" className="btn btn-primary">
+                        Vai alle scarpette
+                    </Link>
+                </div>
             )}
 
-            <div>
-                {compareItems.map((shoe) => (
-                    <button
-                        key={shoe.id}
-                        onClick={() => toggleCompare(shoe)}
-                    >
-                        Rimuovi {shoe.title}
-                    </button>
-                ))}
-            </div>
+            {compareItems.length === 1 && (
+                <div className="text-center py-5">
+                    <h2 className="h4">
+                        Seleziona una seconda scarpetta
+                    </h2>
+
+                    <p className="text-body-secondary">
+                        Hai selezionato {compareItems[0].title}.
+                    </p>
+
+                    <div className="d-flex justify-content-center gap-2">
+                        <button
+                            type="button"
+                            className="btn btn-outline-danger"
+                            onClick={() => toggleCompare(compareItems[0])}
+                        >
+                            Rimuovi
+                        </button>
+
+                        <Link to="/shoes" className="btn btn-primary">
+                            Scegli la seconda
+                        </Link>
+                    </div>
+                </div>
+            )}
+
+            {loading && (
+                <div className="text-center py-5">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">
+                            Caricamento confronto...
+                        </span>
+                    </div>
+                </div>
+            )}
+
+            {error && (
+                <div className="alert alert-danger" role="alert">
+                    {error}
+                </div>
+            )}
+
+            {!loading &&
+                !error &&
+                compareItems.length === 2 &&
+                details.length === 2 && (
+                    <>
+                        <div className="table-responsive">
+                            <table className="table table-bordered align-middle">
+                                <thead className="table-light">
+                                    <tr>
+                                        <th scope="col">Caratteristica</th>
+                                        <th scope="col">{details[0].title}</th>
+                                        <th scope="col">{details[1].title}</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Categoria</th>
+                                        <td>{details[0].category}</td>
+                                        <td>{details[1].category}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">Brand</th>
+                                        <td>{details[0].brand}</td>
+                                        <td>{details[1].brand}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">Prezzo</th>
+                                        <td>€{details[0].price}</td>
+                                        <td>€{details[1].price}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">Chiusura</th>
+                                        <td>{details[0].closure}</td>
+                                        <td>{details[1].closure}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">Rigidità</th>
+                                        <td>{details[0].stiffness}</td>
+                                        <td>{details[1].stiffness}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">Profilo</th>
+                                        <td>{details[0].downturn}</td>
+                                        <td>{details[1].downturn}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">Livello</th>
+                                        <td>{details[0].level}</td>
+                                        <td>{details[1].level}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">Ideale per</th>
+                                        <td>{details[0].bestFor}</td>
+                                        <td>{details[1].bestFor}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="d-flex flex-column flex-md-row gap-2 mt-4">
+                            {compareItems.map((shoe) => (
+                                <button
+                                    key={shoe.id}
+                                    type="button"
+                                    className="btn btn-outline-danger"
+                                    onClick={() => toggleCompare(shoe)}
+                                >
+                                    <i className="bi bi-x-circle me-2"></i>
+                                    Rimuovi {shoe.title}
+                                </button>
+                            ))}
+                        </div>
+                    </>
+                )}
         </section>
     );
 }

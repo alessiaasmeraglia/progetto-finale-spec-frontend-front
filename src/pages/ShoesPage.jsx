@@ -52,6 +52,12 @@ function ShoesPage() {
             });
     }, [debouncedSearch, category, API_URL]);
 
+    function resetFilters() {
+        setSearch("");
+        setCategory("");
+        setSort("title-asc");
+    }
+
     return (
         <section className="container py-5">
             <div className="mb-4">
@@ -156,6 +162,17 @@ function ShoesPage() {
                         </option>
                     </select>
                 </div>
+            </div>
+
+            <div className="col-12">
+                <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={resetFilters}
+                >
+                    <i className="bi bi-arrow-counterclockwise me-2"></i>
+                    Reset filtri
+                </button>
             </div>
 
             {loading && (

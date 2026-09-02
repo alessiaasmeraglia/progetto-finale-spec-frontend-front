@@ -17,11 +17,36 @@ function ShoeCard({ shoe }) {
 
 
     return (
-        <article className="card h-100 shadow-sm">
+        <article
+            className={`card h-100 shadow-sm ${compared ? "border-dark border-2" : ""
+                }`}
+        >
             <div className="card-body d-flex flex-column">
-                <span className="badge text-bg-light border align-self-start mb-2">
-                    {shoe.category}
-                </span>
+                <div className="d-flex justify-content-between align-items-start mb-2">
+                    <span className="badge text-bg-light border">
+                        {shoe.category}
+                    </span>
+
+                    <div className="d-flex gap-2">
+                        {favorite && (
+                            <span
+                                className="badge text-bg-danger"
+                                title="Nei preferiti"
+                            >
+                                <i className="bi bi-heart-fill"></i>
+                            </span>
+                        )}
+
+                        {compared && (
+                            <span
+                                className="badge text-bg-dark"
+                                title="Nel confronto"
+                            >
+                                <i className="bi bi-arrow-left-right"></i>
+                            </span>
+                        )}
+                    </div>
+                </div>
 
                 <h2 className="h5 card-title">
                     {shoe.title}

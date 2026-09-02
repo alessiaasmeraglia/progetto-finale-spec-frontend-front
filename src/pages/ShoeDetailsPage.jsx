@@ -48,33 +48,145 @@ function ShoeDetailsPage() {
     }
 
     return (
-        <section>
-            <h1>{shoe.title}</h1>
+        <section className="container py-5">
+            <div className="row g-5 align-items-start">
+                <div className="col-12 col-lg-5">
+                    <div className="border rounded-4 p-4 text-center bg-body-tertiary">
+                        <i className="bi bi-image fs-1 text-body-secondary"></i>
 
-            <p>Categoria: {shoe.category}</p>
-            <p>Brand: {shoe.brand}</p>
-            <p>Prezzo: €{shoe.price}</p>
-            <p>Chiusura: {shoe.closure}</p>
-            <p>Rigidità: {shoe.stiffness}</p>
-            <p>Profilo: {shoe.downturn}</p>
-            <p>Livello: {shoe.level}</p>
-            <p>Ideale per: {shoe.bestFor}</p>
-            <p>{shoe.description}</p>
-            
-            <button onClick={() => toggleFavorite(shoe)}>
-                {isFavorite(shoe.id)
-                    ? "Rimuovi dai preferiti"
-                    : "Aggiungi ai preferiti"}
-            </button>
+                        <p className="text-body-secondary mt-3 mb-0">
+                            Immagine prodotto
+                        </p>
+                    </div>
+                </div>
 
-            <button
-                onClick={() => toggleCompare(shoe)}
-                disabled={!isInCompare(shoe.id) && compareItems.length >= 2}
-            >
-                {isInCompare(shoe.id)
-                    ? "Rimuovi dal confronto"
-                    : "Confronta"}
-            </button>
+                <div className="col-12 col-lg-7">
+                    <span className="badge text-bg-light border mb-3">
+                        {shoe.category}
+                    </span>
+
+                    <h1 className="display-6 fw-bold mb-3">
+                        {shoe.title}
+                    </h1>
+
+                    <p className="lead text-body-secondary">
+                        {shoe.description}
+                    </p>
+
+                    <div className="row g-3 my-4">
+                        <div className="col-12 col-md-6">
+                            <div className="border rounded-3 p-3 h-100">
+                                <small className="text-body-secondary d-block">
+                                    Brand
+                                </small>
+
+                                <strong>{shoe.brand}</strong>
+                            </div>
+                        </div>
+
+                        <div className="col-12 col-md-6">
+                            <div className="border rounded-3 p-3 h-100">
+                                <small className="text-body-secondary d-block">
+                                    Prezzo
+                                </small>
+
+                                <strong>€{shoe.price}</strong>
+                            </div>
+                        </div>
+
+                        <div className="col-12 col-md-6">
+                            <div className="border rounded-3 p-3 h-100">
+                                <small className="text-body-secondary d-block">
+                                    Chiusura
+                                </small>
+
+                                <strong>{shoe.closure}</strong>
+                            </div>
+                        </div>
+
+                        <div className="col-12 col-md-6">
+                            <div className="border rounded-3 p-3 h-100">
+                                <small className="text-body-secondary d-block">
+                                    Rigidità
+                                </small>
+
+                                <strong>{shoe.stiffness}</strong>
+                            </div>
+                        </div>
+
+                        <div className="col-12 col-md-6">
+                            <div className="border rounded-3 p-3 h-100">
+                                <small className="text-body-secondary d-block">
+                                    Profilo
+                                </small>
+
+                                <strong>{shoe.downturn}</strong>
+                            </div>
+                        </div>
+
+                        <div className="col-12 col-md-6">
+                            <div className="border rounded-3 p-3 h-100">
+                                <small className="text-body-secondary d-block">
+                                    Livello
+                                </small>
+
+                                <strong>{shoe.level}</strong>
+                            </div>
+                        </div>
+
+                        <div className="col-12">
+                            <div className="border rounded-3 p-3">
+                                <small className="text-body-secondary d-block">
+                                    Ideale per
+                                </small>
+
+                                <strong>{shoe.bestFor}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="d-flex flex-column flex-sm-row gap-2">
+                        <button
+                            type="button"
+                            className={`btn ${isFavorite(shoe.id)
+                                    ? "btn-danger"
+                                    : "btn-outline-danger"
+                                }`}
+                            onClick={() => toggleFavorite(shoe)}
+                        >
+                            <i
+                                className={`bi ${isFavorite(shoe.id)
+                                        ? "bi-heart-fill"
+                                        : "bi-heart"
+                                    } me-2`}
+                            ></i>
+
+                            {isFavorite(shoe.id)
+                                ? "Rimuovi dai preferiti"
+                                : "Aggiungi ai preferiti"}
+                        </button>
+
+                        <button
+                            type="button"
+                            className={`btn ${isInCompare(shoe.id)
+                                    ? "btn-dark"
+                                    : "btn-outline-dark"
+                                }`}
+                            onClick={() => toggleCompare(shoe)}
+                            disabled={
+                                !isInCompare(shoe.id) &&
+                                compareItems.length >= 2
+                            }
+                        >
+                            <i className="bi bi-arrow-left-right me-2"></i>
+
+                            {isInCompare(shoe.id)
+                                ? "Rimuovi dal confronto"
+                                : "Confronta"}
+                        </button>
+                    </div>
+                </div>
+            </div>
         </section>
     );
 }

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../contexts/FavoritesContext";
 import { useCompare } from "../contexts/CompareContext";
@@ -15,17 +16,45 @@ function ShoeCard({ shoe }) {
     const compared = isInCompare(shoe.id);
     const compareFull = compareItems.length >= 2 && !compared;
 
+    const [details, setDetails] = useState(null);
+
+    const API_URL = import.meta.env.VITE_API_URL;
+
+    useEffect(() => {
+        fetch(`${API_URL}/shoes/${shoe.id}`)
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error("Errore nel recupero della scarpetta");
+                }
+
+                return res.json();
+            })
+            .then((data) => {
+                setDetails(data.shoe);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [shoe.id, API_URL]);
 
     return (
         <article
             className={`card h-100 shadow-sm ${compared ? "border-dark border-2" : ""
                 }`}
         >
-            <img
-                src={shoe.image}
-                className="card-img-top"
-                alt={shoe.title}
-            />
+            {details?.image && (
+                <img
+                    src={details.image}
+                    className="card-img-top"
+                    alt={shoe.title}
+                    style={{
+                        height: "250px",
+                        objectFit: "contain",
+                        padding: "1rem",
+                    }}
+                />
+            )}
+            
             <div className="card-body d-flex flex-column">
                 <div className="d-flex justify-content-between align-items-start mb-2">
                     <span className="badge text-bg-light border">

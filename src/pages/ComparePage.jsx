@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useCompare } from "../contexts/CompareContext";
+import { getShoeById } from "../services/shoesApi";
 
 function ComparePage() {
     const { compareItems, toggleCompare } = useCompare();
@@ -8,8 +9,6 @@ function ComparePage() {
     const [details, setDetails] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-
-    const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         if (compareItems.length !== 2) {
@@ -21,15 +20,7 @@ function ComparePage() {
         setError("");
 
         Promise.all(
-            compareItems.map((shoe) =>
-                fetch(`${API_URL}/shoes/${shoe.id}`).then((res) => {
-                    if (!res.ok) {
-                        throw new Error("Errore nel recupero dei dettagli");
-                    }
-
-                    return res.json().then((data) => data.shoe);
-                })
-            )
+            compareItems.map((shoe) => getShoeById(shoe.id))
         )
             .then((data) => {
                 setDetails(data);
@@ -40,7 +31,7 @@ function ComparePage() {
             .finally(() => {
                 setLoading(false);
             });
-    }, [compareItems, API_URL]);
+    }, [compareItems]);
 
     if (compareItems.length === 0) {
         return (

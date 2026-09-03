@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFavorites } from "../contexts/FavoritesContext";
 import { useCompare } from "../contexts/CompareContext";
+import { getShoeById } from "../services/shoesApi";
 
 function ShoeDetailsPage() {
     const { id } = useParams();
@@ -13,19 +14,13 @@ function ShoeDetailsPage() {
     const { toggleFavorite, isFavorite } = useFavorites();
     const { toggleCompare, isInCompare, compareItems } = useCompare();
 
-    const API_URL = import.meta.env.VITE_API_URL;
-
     useEffect(() => {
-        fetch(`${API_URL}/shoes/${id}`)
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error("Scarpetta non trovata");
-                }
+        setLoading(true);
+        setError("");
 
-                return res.json();
-            })
+        getShoeById(id)
             .then((data) => {
-                setShoe(data.shoe);
+                setShoe(data);
             })
             .catch((err) => {
                 setError(err.message);
@@ -33,7 +28,7 @@ function ShoeDetailsPage() {
             .finally(() => {
                 setLoading(false);
             });
-    }, [id, API_URL]);
+    }, [id]);
 
     if (loading) {
         return <p>Caricamento...</p>;

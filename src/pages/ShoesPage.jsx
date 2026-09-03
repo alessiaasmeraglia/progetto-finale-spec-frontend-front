@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { sortShoes } from "../utils/shoes";
+import { getShoes } from "../services/shoesApi";
 
 import ShoeCard from "../components/ShoeCard";
 
@@ -12,8 +13,6 @@ function ShoesPage() {
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
-    const API_URL = import.meta.env.VITE_API_URL;
 
     const sortedShoes = sortShoes(shoes, sort);
 
@@ -31,16 +30,7 @@ function ShoesPage() {
         setLoading(true);
         setError("");
 
-        fetch(
-            `${API_URL}/shoes?search=${debouncedSearch}&category=${category}`
-        )
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error("Errore nel recupero delle scarpette");
-                }
-
-                return res.json();
-            })
+        getShoes(debouncedSearch, category)
             .then((data) => {
                 setShoes(data);
             })
@@ -50,7 +40,7 @@ function ShoesPage() {
             .finally(() => {
                 setLoading(false);
             });
-    }, [debouncedSearch, category, API_URL]);
+    }, [debouncedSearch, category]);
 
     function resetFilters() {
         setSearch("");

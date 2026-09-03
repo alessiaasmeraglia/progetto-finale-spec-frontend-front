@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../contexts/FavoritesContext";
 import { useCompare } from "../contexts/CompareContext";
+import { getShoeById } from "../services/shoesApi";
 import "./ShoeCard.css";
 
 function ShoeCard({ shoe }) {
@@ -22,21 +23,14 @@ function ShoeCard({ shoe }) {
     const API_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
-        fetch(`${API_URL}/shoes/${shoe.id}`)
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error("Errore nel recupero della scarpetta");
-                }
-
-                return res.json();
-            })
+        getShoeById(shoe.id)
             .then((data) => {
-                setDetails(data.shoe);
+                setDetails(data);
             })
             .catch((err) => {
                 console.error(err);
             });
-    }, [shoe.id, API_URL]);
+    }, [shoe.id]);
 
     return (
         <article

@@ -48,7 +48,7 @@ function ShoeCard({ shoe }) {
                     src={details.image}
                     className="card-img-top shoe-card-image"
                     alt={shoe.title}
-                    
+
                 />
             )}
 
@@ -82,6 +82,18 @@ function ShoeCard({ shoe }) {
                 <h2 className="h5 card-title">
                     {shoe.title}
                 </h2>
+
+                {details && (
+                    <>
+                        <p className="text-body-secondary mb-2">
+                            {details.brand}
+                        </p>
+
+                        <p className="fw-bold mb-3">
+                            €{details.price}
+                        </p>
+                    </>
+                )}
 
                 <div className="mt-auto pt-3 d-grid gap-2">
                     <Link

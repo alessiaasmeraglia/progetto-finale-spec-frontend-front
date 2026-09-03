@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFavorites } from "../contexts/FavoritesContext";
 import { useCompare } from "../contexts/CompareContext";
 import { getShoeById } from "../services/shoesApi";
 
 function ShoeDetailsPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [shoe, setShoe] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -44,6 +45,14 @@ function ShoeDetailsPage() {
 
     return (
         <section className="container py-5">
+            <button
+                type="button"
+                className="btn btn-link text-decoration-none px-0 mb-4"
+                onClick={() => navigate(-1)}
+            >
+                <i className="bi bi-arrow-left me-2"></i>
+                Torna indietro
+            </button>
             <div className="row g-5 align-items-start">
                 <div className="col-12 col-lg-5">
                     <img

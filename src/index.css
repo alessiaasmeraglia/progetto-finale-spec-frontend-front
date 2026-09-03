@@ -1,3 +1,11 @@
+body,
+button,
+input,
+select,
+textarea {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
 .home-hero-shoe {
     width: 100%;
     max-width: 420px;

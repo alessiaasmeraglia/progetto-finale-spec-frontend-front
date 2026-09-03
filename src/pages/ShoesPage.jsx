@@ -154,7 +154,7 @@ function ShoesPage() {
                 </div>
             </div>
 
-            <div className="col-12">
+            <div className="col-12 mb-4">
                 <button
                     type="button"
                     className="btn btn-outline-secondary"

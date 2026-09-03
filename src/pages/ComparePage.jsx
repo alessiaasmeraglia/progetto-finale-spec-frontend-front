@@ -160,8 +160,32 @@ function ComparePage() {
                                 <thead className="table-light">
                                     <tr>
                                         <th scope="col">Caratteristica</th>
-                                        <th scope="col">{details[0].title}</th>
-                                        <th scope="col">{details[1].title}</th>
+
+                                        <th scope="col" className="text-center">
+                                            <img
+                                                src={details[0].image}
+                                                alt={details[0].title}
+                                                className="compare-shoe-image mb-2"
+                                                onError={(e) => {
+                                                    e.currentTarget.src = "/img/shoes/placeholder.jpg";
+                                                }}
+                                            />
+
+                                            <div>{details[0].title}</div>
+                                        </th>
+
+                                        <th scope="col" className="text-center">
+                                            <img
+                                                src={details[1].image}
+                                                alt={details[1].title}
+                                                className="compare-shoe-image mb-2"
+                                                onError={(e) => {
+                                                    e.currentTarget.src = "/img/shoes/placeholder.jpg";
+                                                }}
+                                            />
+
+                                            <div>{details[1].title}</div>
+                                        </th>
                                     </tr>
                                 </thead>
 

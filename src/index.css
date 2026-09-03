@@ -4,3 +4,10 @@
     height: 320px;
     object-fit: contain;
 }
+
+.compare-shoe-image {
+    width: 100%;
+    max-width: 180px;
+    height: 150px;
+    object-fit: contain;
+}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../contexts/FavoritesContext";
 import { useCompare } from "../contexts/CompareContext";
+import "./ShoeCard.css";
 
 function ShoeCard({ shoe }) {
     const { toggleFavorite, isFavorite } = useFavorites();
@@ -45,16 +46,12 @@ function ShoeCard({ shoe }) {
             {details?.image && (
                 <img
                     src={details.image}
-                    className="card-img-top"
+                    className="card-img-top shoe-card-image"
                     alt={shoe.title}
-                    style={{
-                        height: "250px",
-                        objectFit: "contain",
-                        padding: "1rem",
-                    }}
+                    
                 />
             )}
-            
+
             <div className="card-body d-flex flex-column">
                 <div className="d-flex justify-content-between align-items-start mb-2">
                     <span className="badge text-bg-light border">

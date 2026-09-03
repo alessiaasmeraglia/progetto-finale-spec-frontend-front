@@ -51,13 +51,11 @@ function ShoeDetailsPage() {
         <section className="container py-5">
             <div className="row g-5 align-items-start">
                 <div className="col-12 col-lg-5">
-                    <div className="border rounded-4 p-4 text-center bg-body-tertiary">
-                        <i className="bi bi-image fs-1 text-body-secondary"></i>
-
-                        <p className="text-body-secondary mt-3 mb-0">
-                            Immagine prodotto
-                        </p>
-                    </div>
+                    <img
+                        src={shoe.image}
+                        alt={shoe.title}
+                        className="img-fluid rounded-4 border"
+                    />
                 </div>
 
                 <div className="col-12 col-lg-7">
@@ -149,15 +147,15 @@ function ShoeDetailsPage() {
                         <button
                             type="button"
                             className={`btn ${isFavorite(shoe.id)
-                                    ? "btn-danger"
-                                    : "btn-outline-danger"
+                                ? "btn-danger"
+                                : "btn-outline-danger"
                                 }`}
                             onClick={() => toggleFavorite(shoe)}
                         >
                             <i
                                 className={`bi ${isFavorite(shoe.id)
-                                        ? "bi-heart-fill"
-                                        : "bi-heart"
+                                    ? "bi-heart-fill"
+                                    : "bi-heart"
                                     } me-2`}
                             ></i>
 
@@ -169,8 +167,8 @@ function ShoeDetailsPage() {
                         <button
                             type="button"
                             className={`btn ${isInCompare(shoe.id)
-                                    ? "btn-dark"
-                                    : "btn-outline-dark"
+                                ? "btn-dark"
+                                : "btn-outline-dark"
                                 }`}
                             onClick={() => toggleCompare(shoe)}
                             disabled={

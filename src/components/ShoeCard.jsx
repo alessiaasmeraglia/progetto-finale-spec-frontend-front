@@ -21,6 +21,11 @@ function ShoeCard({ shoe }) {
             className={`card h-100 shadow-sm ${compared ? "border-dark border-2" : ""
                 }`}
         >
+            <img
+                src={shoe.image}
+                className="card-img-top"
+                alt={shoe.title}
+            />
             <div className="card-body d-flex flex-column">
                 <div className="d-flex justify-content-between align-items-start mb-2">
                     <span className="badge text-bg-light border">

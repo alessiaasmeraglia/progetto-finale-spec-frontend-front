@@ -11,3 +11,10 @@
     height: 150px;
     object-fit: contain;
 }
+
+.compare-single-image {
+    width: 100%;
+    max-width: 260px;
+    height: 220px;
+    object-fit: contain;
+}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import { useCompare } from "../contexts/CompareContext";
 import { getShoeById } from "../services/shoesApi";
 
@@ -7,15 +8,37 @@ function ComparePage() {
     const { compareItems, toggleCompare } = useCompare();
 
     const [details, setDetails] = useState([]);
+    const [singleDetail, setSingleDetail] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        if (compareItems.length !== 2) {
+        if (compareItems.length === 0) {
             setDetails([]);
+            setSingleDetail(null);
             return;
         }
 
+        if (compareItems.length === 1) {
+            setDetails([]);
+            setLoading(true);
+            setError("");
+
+            getShoeById(compareItems[0].id)
+                .then((data) => {
+                    setSingleDetail(data);
+                })
+                .catch((err) => {
+                    setError(err.message);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+
+            return;
+        }
+
+        setSingleDetail(null);
         setLoading(true);
         setError("");
 
@@ -35,37 +58,94 @@ function ComparePage() {
 
     if (compareItems.length === 0) {
         return (
-            <section>
-                <h1>Confronta scarpette</h1>
+            <section className="container py-5">
+                <div className="text-center py-5">
+                    <i className="bi bi-arrow-left-right display-4 text-body-secondary"></i>
 
-                <p>Non hai ancora selezionato nessuna scarpetta da confrontare.</p>
+                    <h1 className="display-6 fw-bold mt-4">
+                        Confronta scarpette
+                    </h1>
 
-                <Link to="/shoes">
-                    Vai alle scarpette
-                </Link>
+                    <p className="text-body-secondary mb-4">
+                        Non hai ancora selezionato nessuna scarpetta da confrontare.
+                    </p>
+
+                    <Link to="/shoes" className="btn btn-primary btn-lg">
+                        <i className="bi bi-search me-2"></i>
+                        Vai alle scarpette
+                    </Link>
+                </div>
             </section>
         );
     }
 
     if (compareItems.length === 1) {
         return (
-            <section>
-                <h1>Confronta scarpette</h1>
+            <section className="container py-5">
+                <div className="text-center mb-5">
+                    <h1 className="display-6 fw-bold">
+                        Confronta scarpette
+                    </h1>
 
-                <p>Seleziona una seconda scarpetta per iniziare il confronto.</p>
-
-                <div>
-                    <h2>{compareItems[0].title}</h2>
-                    <p>{compareItems[0].category}</p>
-
-                    <button onClick={() => toggleCompare(compareItems[0])}>
-                        Rimuovi dal confronto
-                    </button>
+                    <p className="text-body-secondary mb-0">
+                        Hai selezionato un modello. Scegline un secondo per iniziare il
+                        confronto.
+                    </p>
                 </div>
 
-                <Link to="/shoes">
-                    Scegli un'altra scarpetta
-                </Link>
+                <div className="row justify-content-center">
+                    <div className="col-12 col-md-8 col-lg-5">
+                        <div className="card shadow-sm">
+                            <div className="card-body p-4 text-center">
+                                {singleDetail?.image && (
+                                    <img
+                                        src={singleDetail.image}
+                                        alt={singleDetail.title}
+                                        className="compare-single-image mb-4"
+                                        onError={(e) => {
+                                            e.currentTarget.src = "/img/shoes/placeholder.jpg";
+                                        }}
+                                    />
+                                )}
+                                
+                                <div className="mb-4">
+                                    <i className="bi bi-arrow-left-right display-4 text-body-secondary"></i>
+                                </div>
+
+                                <span className="badge text-bg-light border mb-3">
+                                    {compareItems[0].category}
+                                </span>
+
+                                <h2 className="h3 fw-bold mb-3">
+                                    {compareItems[0].title}
+                                </h2>
+
+                                <p className="text-body-secondary mb-4">
+                                    Questo modello è pronto per il confronto.
+                                </p>
+
+                                <div className="d-grid gap-2">
+                                    <Link
+                                        to="/shoes"
+                                        className="btn btn-primary btn-lg"
+                                    >
+                                        <i className="bi bi-plus-circle me-2"></i>
+                                        Scegli la seconda scarpetta
+                                    </Link>
+
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-danger"
+                                        onClick={() => toggleCompare(compareItems[0])}
+                                    >
+                                        <i className="bi bi-x-circle me-2"></i>
+                                        Rimuovi dal confronto
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         );
     }

@@ -86,7 +86,7 @@ function ClimbAssistant() {
         <section className="climb-assistant container py-5">
             <div className="text-center mb-4">
                 <span className="assistant-badge">
-                    AI Assistant
+                    ClimbCompare Assistant
                 </span>
 
                 <h1 className="mt-3">

@@ -9,16 +9,34 @@ import ComparePage from "./pages/ComparePage";
 import FavoritesPage from "./pages/FavoritesPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
+import AssistantPage from "./pages/AssistantPage";
+
 function App() {
   return (
     <Routes>
       <Route element={<MainLayout />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/shoes" element={<ShoesPage />} />
-        <Route path="/shoes/:id" element={<ShoeDetailsPage />} />
-        <Route path="/compare" element={<ComparePage />} />
-        <Route path="/favorites" element={<FavoritesPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route
+          path="/"
+          element={<HomePage />} />
+        <Route
+          path="/shoes"
+          element={<ShoesPage />} />
+        <Route
+          path="/shoes/:id"
+          element={<ShoeDetailsPage />} />
+        <Route
+          path="/compare"
+          element={<ComparePage />} />
+        <Route
+          path="/favorites"
+          element={<FavoritesPage />} />
+        <Route
+          path="/assistant"
+          element={<AssistantPage />}
+        />
+        <Route
+          path="*"
+          element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

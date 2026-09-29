@@ -73,6 +73,13 @@ function Header() {
                                         {favorites.length}
                                     </span>
                                 </NavLink>
+
+                                <NavLink
+                                    to="/assistant"
+                                    className="nav-link"
+                                >
+                                    Trova la tua scarpetta
+                                </NavLink>
                             </li>
                         </ul>
                     </div>

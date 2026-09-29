@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { sendRecommendationMessage } from "../services/recommenderApi";
 import "./ClimbAssistant.css";
+import ReactMarkdown from "react-markdown";
 
 function ClimbAssistant() {
     const [messages, setMessages] = useState([
@@ -103,14 +104,18 @@ function ClimbAssistant() {
                     {messages.map((message, index) => (
                         <div
                             key={index}
-                            className={`assistant-message ${
-                                message.role === "user"
+                            className={`assistant-message ${message.role === "user"
                                     ? "user-message"
                                     : "bot-message"
-                            }`}
+                                }`}
                         >
-                            {message.text}
-                        </div>
+                            {message.role === "assistant" ? (
+                                <ReactMarkdown>
+                                    {message.text}
+                                </ReactMarkdown>
+                            ) : (
+                                message.text
+                            )}                        </div>
                     ))}
 
                     {loading && (
